@@ -1,0 +1,210 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: uka-locust-locust
+    chart: locust-1.1.1
+    component: master
+    heritage: Tiller
+    release: uka-locust
+  name: uka-locust-master
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 1
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      app: uka-locust-locust
+      component: master
+      release: uka-locust
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: uka-locust-locust
+        component: master
+        release: uka-locust
+    spec:
+      containers:
+      - env:
+        - name: TARGET_HOST
+          value: http://btest.ingress.uka.k8s.pizza
+        - name: LOCUST_MODE
+          value: master
+        - name: LOCUST_SCRIPT
+          value: /locust-tasks/tasks.py
+        image: greenbirdit/locust:0.9.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8089
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: locust
+        ports:
+        - containerPort: 8089
+          name: loc-master-web
+          protocol: TCP
+        - containerPort: 5557
+          name: loc-master-p1
+          protocol: TCP
+        - containerPort: 5558
+          name: loc-master-p2
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8089
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /locust-tasks/
+          name: locust-tasks
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: uka-locust-worker
+        name: locust-tasks
+
+---        
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: uka-locust-locust
+    chart: locust-1.1.1
+    component: worker
+    heritage: Tiller
+    release: uka-locust
+  name: uka-locust-worker
+spec:
+  progressDeadlineSeconds: 2147483647
+  replicas: 2
+  revisionHistoryLimit: 2147483647
+  selector:
+    matchLabels:
+      app: uka-locust-locust
+      component: worker
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: uka-locust-locust
+        component: worker
+    spec:
+      containers:
+      - env:
+        - name: LOCUST_SCRIPT
+          value: /locust-tasks/tasks.py
+        - name: LOCUST_MODE
+          value: worker
+        - name: LOCUST_MASTER
+          value: uka-locust-master-svc
+        - name: LOCUST_MASTER_WEB
+          value: "8089"
+        - name: TARGET_HOST
+          value: https://site.example.com
+        image: greenbirdit/locust:0.9.0
+        imagePullPolicy: IfNotPresent
+        name: locust
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /locust-tasks/
+          name: locust-tasks
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: uka-locust-worker
+        name: locust-tasks
+
+--- 
+
+apiVersion: v1
+data:
+  tasks.py: |-
+    from locust import HttpLocust, TaskSet, task
+
+    class ElbTasks(TaskSet):
+      @task
+      def status(self):
+          self.client.get("/")
+
+    class ElbWarmer(HttpLocust):
+      task_set = ElbTasks
+      min_wait = 1000
+      max_wait = 3000
+kind: ConfigMap
+metadata:
+  labels:
+    app: uka-locust-locust
+    chart: locust-1.1.1
+    heritage: Tiller
+    release: uka-locust
+  name: uka-locust-worker
+
+--- 
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: uka-locust-locust
+    chart: locust-1.1.1
+    component: master
+    heritage: Tiller
+    release: uka-locust
+  name: uka-locust-master-svc
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: master-web
+    port: 8089
+    protocol: TCP
+    targetPort: 8089
+  - name: master-p1
+    port: 5557
+    protocol: TCP
+    targetPort: 5557
+  - name: master-p2
+    port: 5558
+    protocol: TCP
+    targetPort: 5558
+  selector:
+    app: uka-locust-locust
+    component: master
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
