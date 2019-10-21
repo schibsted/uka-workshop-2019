@@ -41,4 +41,6 @@ In order to determine how well a service performs under load it is best to expos
     As the number of users increases so will the resource usage of the pods. When pods exceed their alotted resource usage they
 will start to be throttled and eventually killed. This can lead to degraded performance and failed responses.
 
+1. Cope with the load. As you saw from the previous section it is possible to specify the number of replicas for a given deployment. As you progress with load tests you can try to increase the number of replicas for the `sirup` deployment with the aim of being able to better cope with the load.
+
 More on locust can be found here: https://locust.io/
