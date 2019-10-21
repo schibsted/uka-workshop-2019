@@ -6,7 +6,7 @@ metadata:
   name: hello-world
 spec:
   rules:
-  - host: helloworld-mynamespace.ingress.uka.k8s.pizza
+  - host: helloworld-CHANGEME.ingress.uka.k8s.pizza
     http:
       paths:
       - backend:
