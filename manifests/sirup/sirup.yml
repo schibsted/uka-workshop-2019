@@ -26,7 +26,7 @@ spec:
       automountServiceAccountToken: false
       containers:
       - env:
-        image: ukaworkshop/schibsted-k8s-uka:535e78132bc8c126e72dcef42f44f471a48ab86a_1571664275
+        image: ukaworkshop/schibsted-k8s-uka:6f10d598da4f2af81018e489c22a114a0983e99d_1571687923
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
