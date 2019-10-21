@@ -33,7 +33,7 @@ spec:
       containers:
       - env:
         - name: TARGET_HOST
-          value: http://btest.ingress.uka.k8s.pizza
+          value: http://sirup-mynamespace.ingress.uka.k8s.pizza
         - name: LOCUST_MODE
           value: master
         - name: LOCUST_SCRIPT
@@ -159,7 +159,7 @@ data:
     class ElbTasks(TaskSet):
       @task
       def status(self):
-          self.client.get("/")
+          self.client.post("/worker/start")
 
     class ElbWarmer(HttpLocust):
       task_set = ElbTasks
