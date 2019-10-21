@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: sirup
+  name: sirup
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: sirup
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+      labels:
+        app: sirup
+      name: sirup
+      namespace: travis-pro
+    spec:
+      automountServiceAccountToken: false
+      containers:
+      - env:
+        image: ukaworkshop/schibsted-k8s-uka:535e78132bc8c126e72dcef42f44f471a48ab86a_1571664275
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: sirup
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /actuator/health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 600m
+            memory: 256M
+          requests:
+            cpu: 300m
+            memory: 256M
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: default
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 35
+

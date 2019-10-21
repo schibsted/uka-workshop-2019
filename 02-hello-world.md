@@ -10,8 +10,8 @@ We have done the very hard work of creating a super complicated web application 
     cd uka-workshop-2019
     ```
 
-1. Look in the `manifests` directory you just checked out. Here you'll find a file called `hello-world.yaml`. We encourage you to open it and have a look around. When you're ready, you can deploy the deployment manifest using `kubectl`:
-    - `kubectl create -f manifests/hello-world.yaml`
+1. Look in the `manifests/hello-world` directory you just checked out. Here you'll find a file called `hello-world.yaml`. We encourage you to open it and have a look around. When you're ready, you can deploy the deployment manifest using `kubectl`:
+    - `kubectl create -f manifests/hello-world/hello-world.yaml`
 
     This will create a deployment resource and spawn a single pod. Let's check what the deployment looks like:
 
