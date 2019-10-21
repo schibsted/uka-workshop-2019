@@ -1,11 +1,3 @@
 # Autoscaling 
 
-Describe what are the issue in the current setup of the service and the idea on how to solve it
-
-Adding the hpa
-
-Rerunning the load test
-
-Observing the grafana dashboard
-
-Problem fixed
+After having scaled the application manually, try setting up a horizontal autoscaler for it!
