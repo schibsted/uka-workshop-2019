@@ -1,8 +1,16 @@
 # Hello World
 
 Let's deploy a `hello-world` app to get familiar with `kubectl`.
+We have done the very hard work of creating a super complicated web application that will print out the phrase *hello world!*, and Dockerized it for you, so that it is ready to be run in Kubernetes. Your task is to deploy it.
 
-1. Deploy the deployment manifest using `kubectl`:
+1. Start by checking out this repo to somewhere on your computer. In the example below, we're using `~/dev/uka-workshop-2019`.
+    ```
+    cd ~/dev
+    git clone https://github.com/schibsted/uka-workshop-2019.git
+    cd uka-workshop-2019
+    ```
+
+1. Look in the `manifests` directory you just checked out. Here you'll find a file called `hello-world.yaml`. We encourage you to open it and have a look around. When you're ready, you can deploy the deployment manifest using `kubectl`:
     - `kubectl create -f manifests/hello-world.yaml`
 
     This will create a deployment resource and spawn a single pod. Let's check what the deployment looks like:
@@ -18,6 +26,8 @@ Let's deploy a `hello-world` app to get familiar with `kubectl`.
     You can similarly inspect the pod using describe:
     - `kubectl describe pod -lapp=hello-world`
 
+    If everything went well, you now have an app running in a Docker container in a Kubernetes cluster in a datacenter in one of Amazons datacenters in Dublin (the `eu-west-1` region).
+
 1. Let's try to see if we can interact with one of the pod endpoints:
     - `kubectl get pods`
       ```
@@ -29,7 +39,7 @@ Let's deploy a `hello-world` app to get familiar with `kubectl`.
 
     - `kubectl port-forward hello-world-56d58679c8-d9l6h 8000:8000` (replace the pod name with the actual pod name found above)
 
-    Use curl `curl http://localhost:8000/` or point your browser to http://localhost:8000/. You should now see a simple `hello world` response.
+    Use curl (`curl http://localhost:8000/`) or point your browser to http://localhost:8000/. You should now see a simple `hello world` response.
 
 1. It is possible to attach to a container within a pod and inspect it from the inside. Sometimes this can be useful for debugging.
 
