@@ -26,7 +26,7 @@ In order to determine how well a service performs under load it is best to expos
 
 1. Starting a test. Now you can start a new test by starting a new swarm that will target your specified host and endpoint. The worker configmap specifies the tasks that the workers should perform and in our case we are calling a specific endpoint of the `sirup` service (endpoint `/worker/start`). Each worker will perform the tasks that have been specified until the test is ended. It is possible to configure the frequency with which they will perform the task but we will be using the defaults here. The current workers will wait a minimum of 1 second before starting a new task.
 
-It is good to start things off slow and gradually increase the number of concurrent users and the rate with which they are added (hatch rate). For the purpose of this simple exercise numbers between 0-100 users with a hatch rate of 1.
+    It is good to start things off slow and gradually increase the number of concurrent users and the rate with which they are added (hatch rate). For the purpose of this simple exercise numbers between 0-100 users with a hatch rate of 1.
 
 1. Once a test has been started it is possible to observe the pods and their resource utilization inside of the cluster
 
@@ -38,7 +38,7 @@ It is good to start things off slow and gradually increase the number of concurr
     sirup-57df898bf4-snvbg               75m           28Mi
     ```
 
-As the number of users increases so will the resource usage of the pods. When pods exceed their alotted resource usage they
+    As the number of users increases so will the resource usage of the pods. When pods exceed their alotted resource usage they
 will start to be throttled and eventually killed. This can lead to degraded performance and failed responses.
 
 More on locust can be found here: https://locust.io/
