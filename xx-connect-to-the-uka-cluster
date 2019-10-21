@@ -3,3 +3,13 @@ How to connect to the cluster
 Locate the kubeconfig file called ukapizza.config
 
 Setup context?
+
+Create a configmap to see if the configuration works
+
+kubectl create configmap getting-started --from-literal=uka=2019 -n<mynamespace>
+
+Read the configmap back
+
+kubectl get cm getting-started -oyaml -n<mynamespace>
+
+Ensure that you are seeing the literal value that you specified when creating the configmap.
