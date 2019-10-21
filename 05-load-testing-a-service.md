@@ -10,16 +10,12 @@ In order to determine how well a service performs under load it is best to expos
     This will create two deployments - one for the master and another one for workers.
     There is a single master and there can be a number of workers operating concurrently. By default we have 1 master and 2 workers.
 
-1. Update target host
-
-The host to target is specified as an environment variable in the master deployment. In order to target your service you can edit the deployment resource and update the hostname to match.
+1. Update target host. The host to target is specified as an environment variable in the master deployment. In order to target your service you can edit the deployment resource and update the hostname to match.
 
     - `kubectl edit deployment uka-locust-master`
     Find the host and update it to match the hostname you specified in a previous step `sirup-<mynamespace>.ingress.uka.k8s.pizza`
 
-1. Connecting to Locust.
-
-Once that is done you can try to connect to the master. It has a web interface that can be accessed on your local machine by doing port forwarding to a local port.
+1. Connecting to Locust. Once that is done you can try to connect to the master. It has a web interface that can be accessed on your local machine by doing port forwarding to a local port.
 
     - `kubectl port-forward svc/uka-locust-master-svc 8089:8089`
     Now the locust master is available by pointing your browser to `http://localhost:8089`
@@ -28,9 +24,7 @@ Once that is done you can try to connect to the master. It has a web interface t
 
     There should be two workers available also reported at the top of the locust web interface.
 
-1. Starting a test
-
-Now you can start a new test by starting a new swarm that will target your specified host and endpoint. The worker configmap specifies the tasks that the workers should perform and in our case we are calling a specific endpoint of the `sirup` service (endpoint `/worker/start`). Each worker will perform the tasks that have been specified until the test is ended. It is possible to configure the frequency with which they will perform the task but we will be using the defaults here. The current workers will wait a minimum of 1 second before starting a new task.
+1. Starting a test. Now you can start a new test by starting a new swarm that will target your specified host and endpoint. The worker configmap specifies the tasks that the workers should perform and in our case we are calling a specific endpoint of the `sirup` service (endpoint `/worker/start`). Each worker will perform the tasks that have been specified until the test is ended. It is possible to configure the frequency with which they will perform the task but we will be using the defaults here. The current workers will wait a minimum of 1 second before starting a new task.
 
 It is good to start things off slow and gradually increase the number of concurrent users and the rate with which they are added (hatch rate). For the purpose of this simple exercise numbers between 0-100 users with a hatch rate of 1.
 
