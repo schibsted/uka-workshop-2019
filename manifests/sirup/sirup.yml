@@ -26,17 +26,17 @@ spec:
       automountServiceAccountToken: false
       containers:
       - env:
-        image: ukaworkshop/schibsted-k8s-uka:6f10d598da4f2af81018e489c22a114a0983e99d_1571687923
+        image: ukaworkshop/schibsted-k8s-uka:ed81cfbc2e1b7375d472140130eb77b081617aa6_1571689191
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
           httpGet:
-            path: /actuator/health
+            path: /worker/healthy
             port: http
             scheme: HTTP
           initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
+          periodSeconds: 2
+          successThreshold: 2
           timeoutSeconds: 1
         name: sirup
         ports:
