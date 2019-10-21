@@ -1,4 +1,4 @@
-# Continuing the K8S Journey
+# Continuing the Journey
 
 Minikube
 Run kubernetes locally https://github.com/kubernetes/minikube
@@ -18,3 +18,12 @@ https://www.youtube.com/watch?v=znYmjsJCSzk
 
 AWS Managed Kubernetes (EKS)
 https://aws.amazon.com/eks/
+
+Prometheus
+https://prometheus.io/
+
+Grafana
+https://grafana.com/
+
+Locust
+https://locust.io/
