@@ -3,7 +3,7 @@
 Let's deploy a `hello-world` app to get familiar with `kubectl`.
 
 1. Deploy the deployment manifest using `kubectl`:
-    - `kubectl create -f manifests/hello-world.yaml`
+    - `kubectl create -f manifests/hello-world/hello-world.yaml`
 
     This will create a deployment resource and spawn a single pod. Let's check what the deployment looks like:
 
