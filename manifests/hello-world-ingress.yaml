@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: hello-world
+  name: hello-world
+spec:
+  rules:
+  - host: helloworld-mynamespace.ingress.uka.k8s.pizza
+    http:
+      paths:
+      - backend:
+          serviceName: hello-world
+          servicePort: 8000
+        path: /
