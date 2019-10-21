@@ -32,3 +32,10 @@ We have set up a Kubernetes cluster in advance which you will need to deploy to.
     ```
     Kubernetes master is running at https://438D4A913F08906FC8ABAD14BEE10E65.sk1.eu-west-1.eks.amazonaws.com
     ```
+1. Create a configmap to see if the configuration works:
+    - `kubectl create configmap getting-started --from-literal=uka=2019`
+
+    Read the configmap back:
+    - `kubectl get cm getting-started -oyaml`
+    
+    You should see something simalar to the following (actual values will differ). Ensure that you are seeing the literal value `uka: 2019` that you specified when creating the configmap.
