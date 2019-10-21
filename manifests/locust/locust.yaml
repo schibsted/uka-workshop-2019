@@ -33,7 +33,7 @@ spec:
       containers:
       - env:
         - name: TARGET_HOST
-          value: http://sirup-mynamespace.ingress.uka.k8s.pizza
+          value: http://sirup-CHANGEME.ingress.uka.k8s.pizza
         - name: LOCUST_MODE
           value: master
         - name: LOCUST_SCRIPT
