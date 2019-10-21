@@ -51,8 +51,3 @@ We have done the very hard work of creating a super complicated web application 
       hello world!
       ```
     Feel free to have a look around the container some more. To detach from the pod simply exit the shell with `exit`
-
-1. It is possible to delete the deployment and remove the running pod with:
-    - `kubectl delete deployment -lapp=hello-world`
-
-    This will remove the deployment object, as well as the running pod.
