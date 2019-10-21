@@ -1,9 +1,16 @@
 # Scaling a service
 
-Describe sirup appen
+In real life Enterprise Applications™ you can't just run one instance of your application. We need the app to scale, because you have millions of customers that want to use your awesome services. And you probably want to have downtime-free deployments, graceful failures, and so on.
+
+We have developed another great app for this workshop, called Sirup™. Some (bad) people would maybe call Sirup™ a rather useless and badly written app, but don't listen to them. Sirup™ is great. The Norwegian word *sirup* also means *syrup* in English, and as we all know, liquid sugar is awesome.
+
+What it does? It eats CPU cycles and starts to throw error messages at you if it gets to much to do.
+
+### How do I deploy this great app, you might ask? Just follow these easy steps:
 
 1. Create a deployment
-As before you can deploy the deployment manifest using `kubectl`:
+    
+    As before you can deploy the deployment manifest using `kubectl`:
     - `kubectl create -f manifests/sirup/sirup.yaml`
 
     This will create a deployment resource and spawn a single pod. Let's check what the deployment looks like:
@@ -20,14 +27,23 @@ As before you can deploy the deployment manifest using `kubectl`:
     - `kubectl describe pod -lapp=sirup`
 
 1. Create a service
-Create the service manifest using `kubectl`:
+    
+    Create the service manifest using `kubectl`:
     - `kubectl create -f manifests/sirup/sirup-service.yaml`
 
 1. Create ingress
-Before proceeding edit the `manifests/sirup/sirup-ingress.yaml` file and change the hostname to match your assigned namespace.  (change sirup-CHANGEME.ingress.uka.k8s.pizza to sirup-<mynamespace>.ingress.uka.k8s.pizza without the <>).
+    
+    Before proceeding edit the `manifests/sirup/sirup-ingress.yaml` file and change the hostname to match your assigned namespace.  (change `sirup-CHANGEME.ingress.uka.k8s.pizza` to `sirup-<my-namespace>.ingress.uka.k8s.pizza` without the <>).
 Now create the ingress manifest using `kubectl`:
     - `kubectl create -f manifests/sirup/sirup-ingress.yaml`
+    
     Now the service is accessible from the internet via `https://sirup-<mynamespace>.ingress.uka.k8s.pizza`.
+
+    - The app has a simple API:
+      - Spawn a new job: `POST /worker/start`
+      - Health check (if the app is running): `GET /actuator/health`
+      - Readyness check (if the app will accept more work): `GET /worker/healthy`
+    - Sirup™ has a few flaws. It is very CPU intensitive, and if the load gets high enough, performance will start to suffer.
 
 1. Getting running pods
     - `kubectl get pod -lapp=sirup`

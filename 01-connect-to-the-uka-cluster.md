@@ -1,13 +1,3 @@
-# Prerequisites
-1. Bring your computer (and if necessary, a charger)
-1. Install **kubectl for Kubernetes**:
-    
-    `kubectl` is the Kubernetes command-line tool, that allows you to run commands against Kubernetes clusters.
-    - macOS: `brew install kubectl` (install [Homebrew](https://brew.sh) first if needed)
-    - Other OS: https://kubernetes.io/docs/tasks/tools/install-kubectl
-
-    Confirm that it is installed with `kubectl version`
-
 # Connect to the Kubernetes cluster
 We have set up a Kubernetes cluster in advance which you will need to deploy to. The cluster is running in AWS EKS (Amazon Elastic Kubernetes Service), and you’ll get your own namespace in the cluster.
 
