@@ -50,3 +50,7 @@ We have set up a Kubernetes cluster in advance which you will need to deploy to.
       selfLink: /api/v1/namespaces/finland/configmaps/getting-started
       uid: 789d86ac-f3e0-11e9-96e1-0a978df5813a
     ```
+
+# Reference
+
+[Overview of kubectl](https://kubernetes.io/docs/reference/kubectl/overview/)
