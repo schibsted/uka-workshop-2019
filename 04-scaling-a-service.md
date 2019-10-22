@@ -97,3 +97,5 @@ What it does? It eats CPU cycles and starts to throw error messages at you if it
     Should we want to avoid processing any requests for the given service it is possible to scale the deployment all the way down to 0 which will kill all pods. 
 
     We did this scaling manually for now but essentially want the scaling to happen automatically as traffic to the service increases.
+
+1. We have set up some basic monitoring of the cluster, which you can access at http://grafana.k8s.pizza/d/pKvrjQTZk/uka-dashboard?orgId=1&refresh=5s. Select your namespace at the top left of the page.
