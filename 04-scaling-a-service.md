@@ -34,7 +34,7 @@ What it does? It eats CPU cycles and starts to throw error messages at you if it
 1. Create ingress
     
     Before proceeding edit the `manifests/sirup/sirup-ingress.yaml` file and change the hostname to match your assigned namespace.  (change `sirup-CHANGEME.ingress.uka.k8s.pizza` to `sirup-<my-namespace>.ingress.uka.k8s.pizza` without the <>).
-Now create the ingress manifest using `kubectl`:
+    Now create the ingress manifest using `kubectl`:
     - `kubectl create -f manifests/sirup/sirup-ingress.yaml`
     
     Now the service is accessible from the internet via `https://sirup-<mynamespace>.ingress.uka.k8s.pizza`.
@@ -83,7 +83,7 @@ Now create the ingress manifest using `kubectl`:
     - `kubectl scale get deployment sirup`
     ```
     NAME          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-    hello-world   4         2         0            2           1d
+    hello-world   4         1         0            1           1d
     ```
     - `kubectl scale get deployment sirup`
     ```
@@ -92,7 +92,7 @@ Now create the ingress manifest using `kubectl`:
     ```
     - `kubectl scale get deployment sirup -w` (it is possible to `watch` the deployment change (abort with ctrl-c))
 
-    Now there are two more replicas in place to handle all traffic coming in through the `sirup` service.
+    Now there are three more replicas in place to handle all traffic coming in through the `sirup` service.
 
     Should we want to avoid processing any requests for the given service it is possible to scale the deployment all the way down to 0 which will kill all pods. 
 
