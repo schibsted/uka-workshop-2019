@@ -11,7 +11,7 @@ What it does? It eats CPU cycles and starts to throw error messages at you if it
 1. Create a deployment
     
     As before you can deploy the deployment manifest using `kubectl`:
-    - `kubectl create -f manifests/sirup/sirup.yaml`
+    - `kubectl create -f manifests/sirup/sirup.yml`
 
     This will create a deployment resource and spawn a single pod. Let's check what the deployment looks like:
 
@@ -29,13 +29,13 @@ What it does? It eats CPU cycles and starts to throw error messages at you if it
 1. Create a service
     
     Create the service manifest using `kubectl`:
-    - `kubectl create -f manifests/sirup/sirup-service.yaml`
+    - `kubectl create -f manifests/sirup/sirup-service.yml`
 
 1. Create ingress
     
-    Before proceeding edit the `manifests/sirup/sirup-ingress.yaml` file and change the hostname to match your assigned namespace.  (change `sirup-CHANGEME.ingress.uka.k8s.pizza` to `sirup-<my-namespace>.ingress.uka.k8s.pizza` without the <>).
+    Before proceeding edit the `manifests/sirup/sirup-ingress.yml` file and change the hostname to match your assigned namespace.  (change `sirup-CHANGEME.ingress.uka.k8s.pizza` to `sirup-<my-namespace>.ingress.uka.k8s.pizza` without the <>).
     Now create the ingress manifest using `kubectl`:
-    - `kubectl create -f manifests/sirup/sirup-ingress.yaml`
+    - `kubectl create -f manifests/sirup/sirup-ingress.yml`
     
     Now the service is accessible from the internet via `https://sirup-<mynamespace>.ingress.uka.k8s.pizza`.
 
@@ -97,5 +97,3 @@ What it does? It eats CPU cycles and starts to throw error messages at you if it
     Should we want to avoid processing any requests for the given service it is possible to scale the deployment all the way down to 0 which will kill all pods. 
 
     We did this scaling manually for now but essentially want the scaling to happen automatically as traffic to the service increases.
-
-1. We have set up some basic monitoring of the cluster, which you can access at http://grafana.k8s.pizza/d/pKvrjQTZk/uka-dashboard?orgId=1&refresh=5s. Select your namespace at the top left of the page.
